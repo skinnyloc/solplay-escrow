@@ -20,7 +20,7 @@ export function useProgram() {
     commitment: 'confirmed',
   });
 
-  const program = new Program(idl as any, PROGRAM_ID, provider);
+  const program = new Program(idl as any, provider);
 
   return program;
 }
