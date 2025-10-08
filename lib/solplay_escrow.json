@@ -1,0 +1,254 @@
+{
+  "version": "0.1.0",
+  "name": "solplay_escrow",
+  "instructions": [
+    {
+      "name": "initializeGame",
+      "docs": [
+        "Initialize a new game escrow"
+      ],
+      "accounts": [
+        {
+          "name": "gameEscrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player1",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "gameId",
+          "type": "string"
+        },
+        {
+          "name": "wagerAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "depositPlayer1",
+      "docs": [
+        "Player 1 deposits wager"
+      ],
+      "accounts": [
+        {
+          "name": "gameEscrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player1",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "depositPlayer2",
+      "docs": [
+        "Player 2 joins and deposits"
+      ],
+      "accounts": [
+        {
+          "name": "gameEscrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player2",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "resolveGame",
+      "docs": [
+        "Resolve game and distribute funds"
+      ],
+      "accounts": [
+        {
+          "name": "gameEscrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player1",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player2",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "houseWallet",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "winner",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "cancelGame",
+      "docs": [
+        "Cancel game and refund (if opponent doesn't join)"
+      ],
+      "accounts": [
+        {
+          "name": "gameEscrow",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "player1",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "GameEscrow",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "gameId",
+            "type": "string"
+          },
+          {
+            "name": "player1",
+            "type": "publicKey"
+          },
+          {
+            "name": "player2",
+            "type": "publicKey"
+          },
+          {
+            "name": "wagerAmount",
+            "type": "u64"
+          },
+          {
+            "name": "player1Deposited",
+            "type": "bool"
+          },
+          {
+            "name": "player2Deposited",
+            "type": "bool"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": "GameStatus"
+            }
+          },
+          {
+            "name": "winner",
+            "type": "publicKey"
+          },
+          {
+            "name": "houseWallet",
+            "type": "publicKey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "GameStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Waiting"
+          },
+          {
+            "name": "Active"
+          },
+          {
+            "name": "Completed"
+          },
+          {
+            "name": "Cancelled"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AlreadyDeposited",
+      "msg": "Player already deposited"
+    },
+    {
+      "code": 6001,
+      "name": "Player1NotDeposited",
+      "msg": "Player 1 must deposit first"
+    },
+    {
+      "code": 6002,
+      "name": "GameNotActive",
+      "msg": "Game is not active"
+    },
+    {
+      "code": 6003,
+      "name": "CannotCancel",
+      "msg": "Cannot cancel active game"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidWinner",
+      "msg": "Invalid winner"
+    }
+  ],
+  "metadata": {
+    "address": "32zTMac534KhSsMHnyNYrgaZDdv6vjp6EVZZPjMno3Nq"
+  }
+}
