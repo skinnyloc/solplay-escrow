@@ -1,7 +1,10 @@
 {
     "scripts": {
-        "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
-        "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w"
     },
     "dependencies": {
         "@coral-xyz/anchor": "^0.31.1",
