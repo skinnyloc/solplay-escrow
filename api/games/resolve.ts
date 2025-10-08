@@ -50,7 +50,7 @@ export default async function handler(req: any, res: any) {
     const connection = new Connection('https://api.devnet.solana.com', 'confirmed');
     const wallet = new Wallet(SERVER_KEYPAIR);
     const provider = new AnchorProvider(connection, wallet, { commitment: 'confirmed' });
-    const program = new Program(idl as any, PROGRAM_ID, provider);
+    const program = new Program(idl as any, provider);
 
     const player1 = new PublicKey(game.player1_wallet);
     const player2 = new PublicKey(game.player2_wallet);
